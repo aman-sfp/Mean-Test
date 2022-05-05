@@ -35,7 +35,6 @@
             <ng-container matColumnDef="name">
                 <th mat-header-cell *matHeaderCellDef mat-sort-header> NAME </th>
                 <td mat-cell *matCellDef="let element">
-                    <!-- {{element.name}}  -->
                     {{element.firstName}}
                     <div *ngIf="!allCandidateData" class="name-loader"></div>
                 </td>

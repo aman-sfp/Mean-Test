@@ -1,15 +1,14 @@
-import { GoogleAddressService } from './../../../../services/google-address.service';
-import { Component, Inject, Input, OnInit, ViewChild } from '@angular/core';
-import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { Component, Inject, OnInit, ViewChild } from '@angular/core';
 import { NgForm } from "@angular/forms";
+import { MatDialog, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { Apollo, gql } from 'apollo-angular';
+import { City, Country } from 'country-state-city';
+import { getStatesOfCountry } from 'country-state-city/dist/lib/state';
 import { GooglePlaceDirective } from 'ngx-google-places-autocomplete';
 import { Address } from 'ngx-google-places-autocomplete/objects/address';
-import { countries } from 'src/shared/countries';
-import { Country, State, City } from 'country-state-city';
-import { getStatesOfCountry } from 'country-state-city/dist/lib/state';
-import { SearchCountryField, CountryISO, PhoneNumberFormat } from 'ngx-intl-tel-input';
+import { CountryISO, PhoneNumberFormat, SearchCountryField } from 'ngx-intl-tel-input';
+import { GoogleAddressService } from './../../../../services/google-address.service';
 import { countryISOFindHandler } from './countryISOFind';
-import { Apollo, gql } from 'apollo-angular';
 
 declare var google: any;
 const CREATE_CANDIDATE = gql`
@@ -189,6 +188,10 @@ export class CandidateModalComponent implements OnInit {
         this.linkedInProfile = this.editCandidateData.socialMediaLinks.linkedIn,
         this.twitterProfile = this.editCandidateData.socialMediaLinks.twitter
     }
+  }
+
+  closeDialog() {
+    this.matDialog.closeAll();
   }
 
   reverseGeocodingWithGoogle(latitude, longitude) {
@@ -380,9 +383,7 @@ export class CandidateModalComponent implements OnInit {
     }
   }
 
-  closeDialog() {
-    this.matDialog.closeAll();
-  }
+ 
 
   updateCandidate() {
     if (this.identityNumber.length < 13) {
